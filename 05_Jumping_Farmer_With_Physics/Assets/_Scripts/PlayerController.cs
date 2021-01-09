@@ -28,6 +28,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        isOnGround = true;
+        // use CompareTag instead of string comparison to avoid heap instances duplication
+        // https://answers.unity.com/questions/200820/is-comparetag-better-than-gameobjecttag-performanc.html
+        if( collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = true;
+        }
     }
 }
