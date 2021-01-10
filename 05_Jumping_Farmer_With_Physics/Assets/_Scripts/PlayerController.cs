@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     public float jumpImpulse = 10;
     private bool isOnGround = true;
+    public bool GameOver { get; private set; }
 
 
     // Start is called before the first frame update
@@ -30,9 +31,13 @@ public class PlayerController : MonoBehaviour
     {
         // use CompareTag instead of string comparison to avoid heap instances duplication
         // https://answers.unity.com/questions/200820/is-comparetag-better-than-gameobjecttag-performanc.html
-        if( collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
+        }
+        else if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            GameOver = true;
         }
     }
 }
