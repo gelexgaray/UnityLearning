@@ -5,16 +5,25 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody rb;
+    private const string ANIMATION_SPEED = "Speed_f";
+    private const string JUMP_TRIGGER = "Jump_trig";
+    private const string DEATH_ANIMATION = "Death_b";
+    private Animator _animator;
+    private Rigidbody _rigidBody;
+
     public float jumpImpulse = 10;
     private bool isOnGround = true;
+
     public bool GameOver { get; private set; }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        _rigidBody = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
+
+        _animator.SetFloat(ANIMATION_SPEED, 1);
     }
 
     // Update is called once per frame
@@ -22,8 +31,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
         {
-            rb.AddForce(Vector3.up * jumpImpulse, ForceMode.Impulse);
+            _rigidBody.AddForce(Vector3.up * jumpImpulse, ForceMode.Impulse);
             isOnGround = false;
+            _animator.SetTrigger(JUMP_TRIGGER);
         }
     }
 
@@ -37,6 +47,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
+            _animator.SetBool(DEATH_ANIMATION, true);
             GameOver = true;
         }
     }
