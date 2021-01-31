@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -19,6 +21,7 @@ public class PlayerController : MonoBehaviour
 
     public ParticleSystem explossion;
     public ParticleSystem trail;
+    public TextMeshProUGUI scoreDisplay;
 
     public bool GameOver { get; private set; }
 
@@ -27,15 +30,17 @@ public class PlayerController : MonoBehaviour
         set { 
             _gameSpeed = value;
             Time.timeScale =_gameSpeed;
+            float score = (value - 1) * 100;
+            if (null != scoreDisplay) scoreDisplay.text = string.Format("{0:N0} $", score);    
         } 
     }
-    [SerializeField]
     private float _gameSpeed;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        GameSpeed = 1;
         _rigidBody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
     }
@@ -44,9 +49,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         ShowTrailIfRunningHighSpeed();
-        if (GameOver) return; 
+        if (GameOver) OnGameOverControl();
+        else OnGameControl();
+    }
 
-        // The following code runs only on active game play
+    private void OnGameControl()
+    {
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
         {
             _rigidBody.AddForce(Vector3.up * jumpImpulse, ForceMode.Impulse);
@@ -55,7 +63,15 @@ public class PlayerController : MonoBehaviour
         }
 
         // Increase game speed over time
-        GameSpeed = 1 + Time.time / 50;
+        GameSpeed = 1 + Time.timeSinceLevelLoad / 50;
+    }
+
+    private void OnGameOverControl()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) )
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     private void ShowTrailIfRunningHighSpeed() 
