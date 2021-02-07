@@ -45,7 +45,7 @@ public class SpawnManager : MonoBehaviour
         }
 
         // Spawn object
-        GameObject objectToSpawn = objectsToSpawn[ Random.Range(0, objectsToSpawn.Length - 1)];
+        GameObject objectToSpawn = objectsToSpawn[ Random.Range(0, objectsToSpawn.Length)];
         Instantiate(objectToSpawn, this.transform);
 
         Invoke("SpawnObject", 
