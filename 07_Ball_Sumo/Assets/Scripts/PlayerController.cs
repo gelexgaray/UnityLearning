@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -28,6 +29,14 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody.AddForce(focalPoint.transform.forward * movementForce * Input.GetAxis("Vertical"));
         _powerUpRoot.transform.position = this.transform.position;
+
+        // Restar game if player falls
+        if (this.transform.position.y < -10)
+        {
+            SceneManager.LoadScene(
+                SceneManager.GetActiveScene().name
+            );
+        }
     }
 
     /// <summary>
@@ -56,7 +65,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator PowerUpExpirer() 
+    IEnumerator PowerUpExpirer()
     {
         if (_powerUpRings.Length <= 0)
         {

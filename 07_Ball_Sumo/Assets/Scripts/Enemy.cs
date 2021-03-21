@@ -18,9 +18,15 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Search & destroy target
         var targetDirection = (target.transform.position - this.transform.position).normalized;
         _rigidbody.AddForce(targetDirection * movementForce);
 
+        // Self destroy when out of screen
+        if (this.transform.position.y < -10)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
 }
