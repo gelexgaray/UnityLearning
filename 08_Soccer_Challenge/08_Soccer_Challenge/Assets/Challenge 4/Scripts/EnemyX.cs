@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Challenge_4.Scripts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,6 +35,7 @@ public class EnemyX : MonoBehaviour
         else if (other.gameObject.name == "Player Goal")
         {
             Destroy(gameObject);
+            GameStatus.GameOver = true;
         }
 
     }

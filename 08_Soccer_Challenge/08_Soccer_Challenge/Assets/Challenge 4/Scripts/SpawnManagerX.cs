@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Challenge_4.Scripts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +21,10 @@ public class SpawnManagerX : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Game Over logic
+        if (GameStatus.GameOver) waveCount = 1;
+
+        // Spawn a new wave if no enemies left
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
         if (enemyCount == 0)
@@ -65,7 +70,7 @@ public class SpawnManagerX : MonoBehaviour
         player.transform.position = new Vector3(0, 1, -7);
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;
         player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
+        GameStatus.GameOver = false;
     }
 
 }

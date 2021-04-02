@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Challenge_4.Scripts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +13,11 @@ public class PlayerControllerX : MonoBehaviour
     public GameObject powerupIndicator;
     public int powerUpDuration = 5;
 
+    public ParticleSystem gameOverParticles;
+
     private float normalStrength = 10; // how hard to hit enemy without powerup
     private float powerupStrength = 25; // how hard to hit enemy with powerup
-    
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -23,9 +26,18 @@ public class PlayerControllerX : MonoBehaviour
 
     void Update()
     {
+        // Game Over logic
+        if (GameStatus.GameOver) {
+            gameOverParticles.Play();
+        }
+
         // Add force to player in direction of the focal point (and camera)
         float verticalInput = Input.GetAxis("Vertical");
-        playerRb.AddForce(focalPoint.transform.forward * verticalInput * speed * Time.deltaTime); 
+        playerRb.AddForce(focalPoint.transform.forward * verticalInput * speed * Time.deltaTime, ForceMode.Force);
+
+        // Brake on space
+        bool brake = Input.GetKey(KeyCode.Space);
+        if (brake) playerRb.velocity = Vector3.zero;
 
         // Set powerup indicator position to beneath player
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.6f, 0);
@@ -58,8 +70,8 @@ public class PlayerControllerX : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             Rigidbody enemyRigidbody = other.gameObject.GetComponent<Rigidbody>();
-            Vector3 awayFromPlayer = other.gameObject.transform.position - transform.position; 
-           
+            Vector3 awayFromPlayer = other.gameObject.transform.position - transform.position;
+
             if (hasPowerup) // if have powerup hit enemy with powerup force
             {
                 enemyRigidbody.AddForce(awayFromPlayer * powerupStrength, ForceMode.Impulse);
