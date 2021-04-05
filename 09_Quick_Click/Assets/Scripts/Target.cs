@@ -13,6 +13,7 @@ public class Target : MonoBehaviour
         this.transform.position = NewRandomStartPosition();
         _rigidBody = this.GetComponent<Rigidbody>();
         _rigidBody.AddForce(NewRandomImpulse(), ForceMode.Impulse);
+        _rigidBody.AddTorque(NewRandomTorque(), ForceMode.Impulse);
     }
 
     private Vector3 NewRandomStartPosition()
@@ -28,6 +29,16 @@ public class Target : MonoBehaviour
         const float minImpulse = 10;
         const float maxImpulse = 18;
         var vector3 = Vector3.up * Random.Range(minImpulse, maxImpulse);
+        return vector3;
+    }
+
+    private Vector3 NewRandomTorque()
+    {
+        const float maxImpulse = 10;
+        var vector3 = new Vector3(
+            Random.Range(0, maxImpulse), 
+            Random.Range(0, maxImpulse), 
+            Random.Range(0, maxImpulse));
         return vector3;
     }
 
