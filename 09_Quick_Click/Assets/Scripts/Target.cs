@@ -48,6 +48,11 @@ public class Target : MonoBehaviour
 
     }
 
+    private void OnMouseDown()
+    {
+        Destroy(this.gameObject);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // Destroy when entering sensor at bottom
