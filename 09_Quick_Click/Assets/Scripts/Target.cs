@@ -5,15 +5,23 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Target : MonoBehaviour
 {
-    private Rigidbody _rigidBody;
+    public int points = 1;
+    public ParticleSystem explossionParticleSystem;
+
+    private Rigidbody rigidBody;
+
+    private GameManager GM { get => _gm; }
+    private GameManager _gm;
 
     // Start is called before the first frame update
     void Start()
     {
+        _gm = FindObjectOfType<GameManager>();
+
         this.transform.position = NewRandomStartPosition();
-        _rigidBody = this.GetComponent<Rigidbody>();
-        _rigidBody.AddForce(NewRandomImpulse(), ForceMode.Impulse);
-        _rigidBody.AddTorque(NewRandomTorque(), ForceMode.Impulse);
+        rigidBody = this.GetComponent<Rigidbody>();
+        rigidBody.AddForce(NewRandomImpulse(), ForceMode.Impulse);
+        rigidBody.AddTorque(NewRandomTorque(), ForceMode.Impulse);
     }
 
     private Vector3 NewRandomStartPosition()
@@ -50,6 +58,11 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
+        GM.Score += points;
+        if (null != explossionParticleSystem) {
+            Instantiate(explossionParticleSystem, this.transform.position, this.transform.rotation)
+                .Play();
+        };
         Destroy(this.gameObject);
     }
 
@@ -58,6 +71,7 @@ public class Target : MonoBehaviour
         // Destroy when entering sensor at bottom
         if(other.gameObject.name.Equals("Sensor"))
         {
+            if (points > 0) GM.Score -= points;
             Destroy(this.gameObject);
         }
     }
