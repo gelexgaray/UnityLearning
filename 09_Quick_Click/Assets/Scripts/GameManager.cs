@@ -7,23 +7,34 @@ public class GameManager : MonoBehaviour
 {
     public List<GameObject> targetItems;
     public float spawnRateSeconds = 1.0f;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI gameOverText;
 
     public int Score {
         get { return _score; }
         set {
             _score = Mathf.Clamp(value, 0, 99999);
-            _scoreTMP.text = $"Score: {_score}";
+            scoreText.text = $"Score: {_score}";
         }
     }
-    private TextMeshProUGUI _scoreTMP;
     private int _score;
+
+    public bool GameOver {
+        get { return _gameOver; }
+        private set
+        {
+            _gameOver = value;
+            gameOverText.gameObject.SetActive(_gameOver);
+        }
+    }
+    private bool _gameOver;
 
     // Start is called before the first frame update
     void Start()
     {
-        _scoreTMP = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
         Score = 0;
         StartCoroutine(TargetSpawner());
+        // TODO: End game with GameOver = true;
     }
 
     /// <summary>
