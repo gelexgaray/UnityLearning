@@ -35,7 +35,7 @@ public class Target : MonoBehaviour
     private Vector3 NewRandomImpulse()
     {
         const float minImpulse = 10;
-        const float maxImpulse = 18;
+        const float maxImpulse = 17;
         var vector3 = Vector3.up * Random.Range(minImpulse, maxImpulse);
         return vector3;
     }
@@ -50,15 +50,18 @@ public class Target : MonoBehaviour
         return vector3;
     }
 
+
     // Update is called once per frame
     void Update()
     {
 
     }
 
+
     private void OnMouseDown()
     {
-        GM.Score += points;
+
+        GM.TargetPicked(this);
         if (null != explossionParticleSystem) {
             Instantiate(explossionParticleSystem, this.transform.position, this.transform.rotation)
                 .Play();
@@ -69,9 +72,9 @@ public class Target : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Destroy when entering sensor at bottom
-        if(other.gameObject.name.Equals("Sensor"))
+        if(other.gameObject.CompareTag("KillZone"))
         {
-            if (points > 0) GM.Score -= points;
+            GM.TargetDropped(this);
             Destroy(this.gameObject);
         }
     }

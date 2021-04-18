@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
 
     public int Score {
         get { return _score; }
-        set {
+        private set 
+        {
             _score = Mathf.Clamp(value, 0, 99999);
             scoreText.text = $"Score: {_score}";
         }
@@ -42,11 +43,37 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private IEnumerator TargetSpawner()
     {
-        while (true)
+        while (!GameOver)
         {
             yield return new WaitForSeconds(spawnRateSeconds);
             var index = Random.Range(0, targetItems.Count);
             Instantiate(targetItems[index]);
         }
+    }
+
+    public void TargetPicked(Target target)
+    {
+        if (GameOver) return;
+
+        if (target.gameObject.CompareTag("Good"))
+        {
+            Score += target.points;
+        }
+        else
+        {
+            Score -= target.points;
+        }
+    }
+
+    public void TargetDropped(Target target)
+    {
+        if (GameOver) return;
+
+        if (target.gameObject.CompareTag("Good"))
+        {
+            GameOver = true;
+        }
+
+
     }
 }

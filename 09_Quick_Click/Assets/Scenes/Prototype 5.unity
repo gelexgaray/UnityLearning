@@ -861,7 +861,7 @@ GameObject:
   - component: {fileID: 1611319331}
   m_Layer: 0
   m_Name: Sensor
-  m_TagString: Untagged
+  m_TagString: KillZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1057,7 +1057,7 @@ MonoBehaviour:
   - {fileID: 3453567923125307226, guid: fc4a6adb566d8ed42abea6ae7f60aeec, type: 3}
   - {fileID: 8448294546160591215, guid: 7d06172624b2681498abdf84277d51ca, type: 3}
   - {fileID: 4772758535187531992, guid: 92f8bbc1a4a4d9840810baf08c0fa2d4, type: 3}
-  spawnRateSeconds: 1
+  spawnRateSeconds: 2
   scoreText: {fileID: 1652920}
   gameOverText: {fileID: 1243319730}
 --- !u!4 &1911667542
