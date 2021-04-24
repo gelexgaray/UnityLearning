@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class GameManager : MonoBehaviour
     public float spawnRateSeconds = 1.0f;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverText;
+    public Button restartButton;
 
     public int Score {
         get { return _score; }
@@ -26,6 +29,7 @@ public class GameManager : MonoBehaviour
         {
             _gameOver = value;
             gameOverText.gameObject.SetActive(_gameOver);
+            restartButton.gameObject.SetActive(_gameOver);
         }
     }
     private bool _gameOver;
@@ -35,7 +39,11 @@ public class GameManager : MonoBehaviour
     {
         Score = 0;
         StartCoroutine(TargetSpawner());
-        // TODO: End game with GameOver = true;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     /// <summary>
