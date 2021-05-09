@@ -8,10 +8,18 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> targetItems;
-    public float spawnRateSeconds = 1.0f;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverText;
     public Button restartButton;
+    public GameObject gameSelectionPanel;
+
+    public static GameManager Instance {
+        get {
+            if( null == _instance) _instance = FindObjectOfType<GameManager>();
+            return _instance;
+        }
+    }
+    private static GameManager _instance;
 
     public int Score {
         get { return _score; }
@@ -34,14 +42,18 @@ public class GameManager : MonoBehaviour
     }
     private bool _gameOver;
 
-    // Start is called before the first frame update
-    void Start()
+    public void StartGame(float spawnRateSeconds, float gravityFactor = 1.0f)
     {
+        Physics.gravity = new Vector3(
+            0, 
+            Physics.gravity.y * gravityFactor, 
+            0);
+        gameSelectionPanel.gameObject.SetActive(false);
         Score = 0;
-        StartCoroutine(TargetSpawner());
+        StartCoroutine(TargetSpawner(spawnRateSeconds));
     }
 
-    public void Restart()
+    public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -49,7 +61,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Corrutina que genera objetos cada cierto tiempo
     /// </summary>
-    private IEnumerator TargetSpawner()
+    private IEnumerator TargetSpawner(float spawnRateSeconds)
     {
         while (!GameOver)
         {

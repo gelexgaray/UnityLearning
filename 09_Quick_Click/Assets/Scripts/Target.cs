@@ -10,13 +10,10 @@ public class Target : MonoBehaviour
 
     private Rigidbody rigidBody;
 
-    private GameManager GM { get => _gm; }
-    private GameManager _gm;
 
     // Start is called before the first frame update
     void Start()
     {
-        _gm = FindObjectOfType<GameManager>();
 
         this.transform.position = NewRandomStartPosition();
         rigidBody = this.GetComponent<Rigidbody>();
@@ -51,17 +48,10 @@ public class Target : MonoBehaviour
     }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
     private void OnMouseDown()
     {
 
-        GM.TargetPicked(this);
+        GameManager.Instance.TargetPicked(this);
         if (null != explossionParticleSystem) {
             Instantiate(explossionParticleSystem, this.transform.position, this.transform.rotation)
                 .Play();
@@ -74,7 +64,7 @@ public class Target : MonoBehaviour
         // Destroy when entering sensor at bottom
         if(other.gameObject.CompareTag("KillZone"))
         {
-            GM.TargetDropped(this);
+            GameManager.Instance.TargetDropped(this);
             Destroy(this.gameObject);
         }
     }

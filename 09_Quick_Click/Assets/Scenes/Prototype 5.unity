@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score: 99999'
+  m_text: 'Score: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8abe1e37fe7bf433896970245b936749, type: 2}
   m_sharedMaterial: {fileID: 21175996417216586, guid: 8abe1e37fe7bf433896970245b936749,
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70.65
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -387,10 +387,10 @@ RectTransform:
   m_Father: {fileID: 1364492415}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -343.4925}
-  m_SizeDelta: {x: 800, y: 113.015}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &232908583
 MonoBehaviour:
@@ -603,10 +603,10 @@ RectTransform:
   m_Father: {fileID: 1364492415}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -143.4925}
-  m_SizeDelta: {x: 800, y: 286.985}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &760230046
 MonoBehaviour:
@@ -875,10 +875,10 @@ RectTransform:
   m_Father: {fileID: 232908582}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 130, y: -56.5075}
-  m_SizeDelta: {x: 240, y: 93.015}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &932689645
 MonoBehaviour:
@@ -973,6 +973,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7dd20265e231c6499d1a0b68795fb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnRateSeconds: 4
+  gravityFactor: 0.5
 --- !u!1 &999762697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,10 +1193,10 @@ RectTransform:
   m_Father: {fileID: 232908582}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 670, y: -56.5075}
-  m_SizeDelta: {x: 240, y: 93.015}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1087151229
 MonoBehaviour:
@@ -1289,6 +1291,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7dd20265e231c6499d1a0b68795fb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnRateSeconds: 1
+  gravityFactor: 1
 --- !u!1 &1143859563
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,7 +1377,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1911667541}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: Restart
+        m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2044,7 +2048,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1364492415
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2165,10 +2169,10 @@ RectTransform:
   m_Father: {fileID: 232908582}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -56.5075}
-  m_SizeDelta: {x: 240, y: 93.015}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1529307629
 MonoBehaviour:
@@ -2263,6 +2267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7dd20265e231c6499d1a0b68795fb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnRateSeconds: 2
+  gravityFactor: 0.9
 --- !u!1 &1611319330
 GameObject:
   m_ObjectHideFlags: 0
@@ -2473,10 +2479,10 @@ MonoBehaviour:
   - {fileID: 3453567923125307226, guid: fc4a6adb566d8ed42abea6ae7f60aeec, type: 3}
   - {fileID: 8448294546160591215, guid: 7d06172624b2681498abdf84277d51ca, type: 3}
   - {fileID: 4772758535187531992, guid: 92f8bbc1a4a4d9840810baf08c0fa2d4, type: 3}
-  spawnRateSeconds: 2
   scoreText: {fileID: 1652920}
   gameOverText: {fileID: 1243319730}
   restartButton: {fileID: 1143859565}
+  gameSelectionPanel: {fileID: 1364492414}
 --- !u!4 &1911667542
 Transform:
   m_ObjectHideFlags: 0

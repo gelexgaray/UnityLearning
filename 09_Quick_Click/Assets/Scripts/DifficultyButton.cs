@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class DifficultyButton : MonoBehaviour
 {
+    public float spawnRateSeconds = 2.0f;
+    public float gravityFactor = 1.0f;
     private Button button;
 
     // Start is called before the first frame update
@@ -18,6 +20,7 @@ public class DifficultyButton : MonoBehaviour
     void OnClick() 
     {
         Debug.Log($"'{button.name}' pressed");
+        GameManager.Instance.StartGame(spawnRateSeconds);
     }
 
 }
