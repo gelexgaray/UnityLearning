@@ -47,8 +47,7 @@ public class Target : MonoBehaviour
         return vector3;
     }
 
-
-    private void OnMouseDown()
+    private void OnMouseOver()
     {
 
         GameManager.Instance.TargetPicked(this);
