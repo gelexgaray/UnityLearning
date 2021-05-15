@@ -9,10 +9,12 @@ public class GameManager : MonoBehaviour
 {
     public List<GameObject> targetItems;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI maxScoreText;
     public TextMeshProUGUI gameOverText;
     public Button restartButton;
     public GameObject gameSelectionPanel;
 
+    #region Singleton instance
     public static GameManager Instance {
         get {
             if( null == _instance) _instance = FindObjectOfType<GameManager>();
@@ -20,17 +22,43 @@ public class GameManager : MonoBehaviour
         }
     }
     private static GameManager _instance;
+    #endregion
 
+    #region Scoring properties
     public int Score {
         get { return _score; }
-        private set 
+        private set
         {
             _score = Mathf.Clamp(value, 0, 99999);
-            scoreText.text = $"Score: {_score}";
+            DrawScore();
         }
     }
+
+    private void DrawScore()
+    {
+        scoreText.text = $"Score: {_score}";
+    }
+
     private int _score;
 
+    public int MaxScore
+    {
+        get { return PlayerPrefs.GetInt("MaxScore"); }
+        private set
+        {
+            int maxScore = Mathf.Clamp(value, 0, 99999);
+            PlayerPrefs.SetInt("MaxScore", maxScore);
+            DrawMaxScore(maxScore);
+        }
+    }
+
+    private void DrawMaxScore(int maxScore)
+    {
+        maxScoreText.text = $"Max: {maxScore}";
+    }
+    #endregion
+
+    #region Game Over property
     public bool GameOver {
         get { return _gameOver; }
         private set
@@ -41,6 +69,12 @@ public class GameManager : MonoBehaviour
         }
     }
     private bool _gameOver;
+    #endregion
+
+    private void Start()
+    {
+        MaxScore = MaxScore; // Refresh MaxScore from game properties
+    }
 
     public void StartGame(float spawnRateSeconds, float gravityFactor = 1.0f)
     {
@@ -81,8 +115,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Score -= target.points;
+            GameOver = true;
         }
+        if (Score > MaxScore) MaxScore = Score;
     }
 
     public void TargetDropped(Target target)
