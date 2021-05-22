@@ -15,6 +15,7 @@ public class GameManagerX : MonoBehaviour
     public List<GameObject> targetPrefabs;
 
     private int score;
+    private int difficulty;
     private float spawnRate = 1.5f;
     public bool isGameActive;
 
@@ -23,8 +24,9 @@ public class GameManagerX : MonoBehaviour
     private float minValueY = -3.75f; //  y value of the center of the bottom-most square
     
     // Start the game, remove title screen, reset score, and adjust spawnRate based on difficulty button clicked
-    public void StartGame()
+    public void StartGame(int difficulty)
     {
+        this.difficulty = difficulty;
         isGameActive = true;
         StartCoroutine(SpawnTarget());
         score = 0;
