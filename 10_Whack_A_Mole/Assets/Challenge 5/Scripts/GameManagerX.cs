@@ -9,15 +9,15 @@ public class GameManagerX : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
-    public TextMeshProUGUI gameOverText;
-    public GameObject titleScreen;
-    public Button restartButton; 
+    public GameObject titleScreen; 
+    public GameObject gameOverScreen;
 
     public List<GameObject> targetPrefabs;
 
     private int score;
     private int difficulty;
     private float spawnRate = 1.5f;
+    [Range(10, 120), SerializeField()]
     private int initialTime = 60;
     private int timeLeft;
     public bool isGameActive;
@@ -108,8 +108,7 @@ public class GameManagerX : MonoBehaviour
     // Stop game, bring up game over text and restart button
     public void GameOver()
     {
-        gameOverText.gameObject.SetActive(true);
-        restartButton.gameObject.SetActive(false);
+        gameOverScreen.gameObject.SetActive(true);
         isGameActive = false;
     }
 
