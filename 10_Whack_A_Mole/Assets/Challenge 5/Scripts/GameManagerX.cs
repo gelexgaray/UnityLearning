@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class GameManagerX : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timeText;
     public TextMeshProUGUI gameOverText;
     public GameObject titleScreen;
     public Button restartButton; 
@@ -17,6 +18,8 @@ public class GameManagerX : MonoBehaviour
     private int score;
     private int difficulty;
     private float spawnRate = 1.5f;
+    private int initialTime = 60;
+    private int timeLeft;
     public bool isGameActive;
 
     private float spaceBetweenSquares = 2.5f; 
@@ -27,11 +30,14 @@ public class GameManagerX : MonoBehaviour
     public void StartGame(int difficulty)
     {
         this.difficulty = difficulty;
+        spawnRate /= difficulty;
         isGameActive = true;
-        StartCoroutine(SpawnTarget());
         score = 0;
         UpdateScore(0);
+        ResetTime();
         titleScreen.SetActive(false);
+        StartCoroutine(SpawnTarget());
+        StartCoroutine(GameTimer());
     }
 
     // While game is active spawn a random target
@@ -47,6 +53,17 @@ public class GameManagerX : MonoBehaviour
                 Instantiate(targetPrefabs[index], RandomSpawnPosition(), targetPrefabs[index].transform.rotation);
             }
             
+        }
+    }
+
+    // While game is active count down time
+    IEnumerator GameTimer()
+    {
+        while (isGameActive)
+        {
+            yield return new WaitForSeconds(1);
+            DecreaseTime();
+            if (timeLeft <= 0) GameOver();
         }
     }
 
@@ -72,6 +89,20 @@ public class GameManagerX : MonoBehaviour
     {
         score += scoreToAdd;
         scoreText.text = $"score: {score}";
+    }
+
+    // Update time
+    public void ResetTime()
+    {
+        timeLeft = initialTime;
+        timeText.text = $"time: {timeLeft}";
+    }
+
+    // Update time
+    public void DecreaseTime()
+    {
+        timeLeft --;
+        timeText.text = $"time: {timeLeft}";
     }
 
     // Stop game, bring up game over text and restart button
