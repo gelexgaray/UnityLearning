@@ -19,13 +19,13 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    // Called at 50fps fixedrate, before OnAnimatorMove
+    void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        // We sum tho movements of module 1, so the result can be > 1. Normalization is required
+        // We sum two movements of module 1, so the result can be > 1. Normalization is required
         this.movement.Set(horizontal, 0, vertical);
         this.movement.Normalize();
 
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         Vector3 desiredForward = Vector3.RotateTowards(
             transform.forward,
             movement,
-            turnSpeed * Time.deltaTime,
+            turnSpeed * Time.fixedDeltaTime,
             0f);
         this.rotation = Quaternion.LookRotation(desiredForward);
     }
