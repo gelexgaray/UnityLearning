@@ -5,8 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider))]
 public class Observer : MonoBehaviour
 {
-    public Transform player;
     bool isPlayerInRange;
+    public Transform player;
+    public GameEnding gameEnding;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -30,15 +31,25 @@ public class Observer : MonoBehaviour
         {
             Vector3 direction = player.position - transform.position + Vector3.up; /* 1m up from foots of John Lemmon */
             Ray ray = new Ray(transform.position, direction);
+            Debug.DrawRay(transform.position, direction, Color.green, Time.deltaTime);
             RaycastHit raycastHit;
             if (Physics.Raycast(ray, out raycastHit))
             {
                 if (raycastHit.collider.transform == player)
                 {
                     Debug.Log("Game End");
-                    // TODO: Signal game end
+                    gameEnding.CatchPlayer();
                 } 
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, 0.1f);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, player.position + Vector3.up);
     }
 }
